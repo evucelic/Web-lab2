@@ -1,0 +1,64 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB LAB1</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <%- include(`partials/header`); %>
+    <div class="container">
+        <nav class="sidebar">
+            <ul class="category-sidebar">
+                <% categories.forEach(category => { %>
+                    <button onclick="location.href='/home/getProducts/<%= category.name %>'"><%= category.name %></button>
+                <% }); %>
+            </ul>
+
+            <ul class="contact-sidebar">
+                <li>Kontakt</li>
+                <li>Newsletter</li>
+                <li>Pretplati se</li>
+            </ul>
+        </nav>
+        <div class="content">
+            <div class="welcome">
+                <p>Dobrodošli na moju web stranicu!</p>
+                <img src="/images/pozdrav.jpg" alt="pozdrav">
+            </div>
+
+            <div class="item-grid">
+                <% if (products.length > 0) { %>
+                    <% products.forEach(product => { %>
+                        <div class="item">
+                            <div class="image-container" product-id="<%= product.name %>">
+                                <img src="/images/<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                                <% if (session.cart && session.cart[product.name]) { %>
+                                    <span class="item-count"><%= session.cart[product.name] %></span>
+                                <% } %>
+                                <div class="overlay">
+                                    <button type="button" class="shopping_cart_btn" onclick="addToCart('<%= product.name %>')">
+                                        <img src="/images/shopping_cart.png" class="shopping_cart">
+                                    </button>
+                                </div>
+                            </div>
+                            <p><%= product.name %></p> 
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <p><b>Izaberi kategoriju:</b></p>
+                    <% categories.forEach(category => { %>
+                        <a  id='placeholder' href='/home/getProducts/<%= category.name %>'><%= category.name %></a>
+                    <% }); %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+<script src="/scripts/script.js"></script>
+</html>

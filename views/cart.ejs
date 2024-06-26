@@ -1,0 +1,56 @@
+<!-- views/cart.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Košarica</title>
+    <link rel="stylesheet" href="/styles/cart.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="/home/getCategories">
+                <img src="/images/logo.png" alt="Logo" class="logo">
+            </a>
+        </div>
+        <div class="category-parent">Košarica</div>
+        <div class="icons">
+            <img src="/images/search_icon.png">
+            <div class="cart_container">
+                <a href="/cart/getAll">
+                    <img src="/images/shopping_cart.png">
+                    <span class="cart-count"><%= Object.values(cart).reduce((acc, count) => acc + count, 0) %></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Košarica</h1>
+        <div class="cart">
+            <div class="product-list">
+                <p><b>Proizvod</b></p> 
+                <% Object.keys(cart).forEach(item => { %>
+                    <p cart-name = "<%= item %>"><%= item %></p>
+                <% }); %>
+            </div>
+            <div class="quantity-list">
+                <p><b>Količina</b></p>
+                <% Object.keys(cart).forEach(item => { %>
+                    <% if(item && cart[item] > 0) { %>
+                        <div class="cart-element" cart-id="<%= item %>">
+                            <button onclick="decreaseQuantity('<%= item %>')">-</button>
+                            <span><%= cart[item] %></span>
+                            <button onclick="increaseQuantity('<%= item %>')">+</button>
+                            <button onclick="removeItem('<%= item %>')">Izbriši</button>
+                        </div>
+                    <% }; %>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="/scripts/cart.js"></script>
+</html>
