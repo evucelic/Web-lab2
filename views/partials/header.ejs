@@ -1,0 +1,21 @@
+<div class="header">
+    <div class="logo">
+        <a href="/home/getCategories">
+            <img src="/images/logo.png" alt="Logo" class="logo">
+        </a>
+    </div>
+    <div class="category-parent">
+        <%= categoryParent %>
+    </div>
+    <div class="icons">
+        <img src="/images/search_icon.png">
+        <div class = "cart_container">
+            <a href="/cart/getAll">
+                <img src="/images/shopping_cart.png">
+                <% if (Object.values(session.cart || {}).reduce((acc, count) => acc + count, 0) > 0) { %>
+                    <span class="cart-count"><%= Object.values(session.cart || {}).reduce((acc, count) => acc + count, 0) %></span>
+                <% } %>
+            </a>
+        </div>
+    </div>
+</div>
